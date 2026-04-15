@@ -143,3 +143,57 @@ Wer darf Was:
 
 ---
 
+📋 KI  Prompt zum Kopieren –
+# TicketSystem – Weiterentwicklung zu Hause
+
+## 🔧 Aktueller Stand
+- TicketSystem läuft lokal mit SQL Server
+- Dark Mode funktioniert
+- Chat Box bleibt weiß (auch im Dark Mode)
+- User sperren/entsperren funktioniert (mit Prompt)
+- Team-Zusammenarbeit (Assignees) funktioniert
+- Prioritäten (Low, Medium, High, Urgent) implementiert
+- Dashboard mit Statistiken und Filtern
+
+## 🐛 Bekannte Probleme (noch offen)
+1. **User sperren** – Der Button hatte noch `data-bs-toggle="modal"`, wurde aber behoben
+2. **Bootstrap JS** – Ist auskommentiert, weil es Konflikte gab
+3. **Chat-Nachrichten** – Klick führt nicht automatisch zum Ticket
+
+## 🚀 Nächste Schritte (optional)
+- [ ] E-Mail-Benachrichtigungen
+- [ ] Ticket-Export als PDF/Excel
+- [ ] Dashboard mit Diagrammen (Chart.js)
+- [ ] Passwort vergessen / Zurücksetzen
+- [ ] Zwei-Faktor-Authentifizierung
+
+## 📁 Wichtige Dateien für zu Hause
+| Datei | Pfad |
+|-------|------|
+| `StyleSheet.css` | `wwwroot/css/StyleSheet.css` |
+| `_Layout.cshtml` | `Views/Shared/_Layout.cshtml` |
+| `Index.cshtml` (Dashboard) | `Views/Home/Index.cshtml` |
+| `Users.cshtml` | `Views/Admin/Users.cshtml` |
+| `TicketController.cs` | `Controllers/TicketController.cs` |
+| `AdminController.cs` | `Controllers/AdminController.cs` |
+| `ApplicationUser.cs` | `Domain/Models/ApplicationUser.cs` |
+| `Ticket.cs` | `Domain/Models/Ticket.cs` |
+| `Program.cs` | `Program.cs` |
+
+## 🛠️ Befehle für zu Hause
+```bash
+# 1. Repository klonen
+git clone https://github.com/Adil-si/TicketSystem.git
+cd TicketSystem
+
+# 2. Datenbank erstellen
+cd TicketSystem.Infrastructure
+dotnet ef database update --startup-project ../TicketSystem
+
+# 3. App starten
+cd ../TicketSystem
+dotnet run
+
+# 4. Browser öffnen
+https://localhost:7107
+
