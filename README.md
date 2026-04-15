@@ -144,7 +144,7 @@ Wer darf Was:
 ---
 
 📋 KI  Prompt zum Kopieren –
-# TicketSystem – Weiterentwicklung zu Hause
+# TicketSystem – Weiterentwicklung 
 
 ## 🔧 Aktueller Stand
 - TicketSystem läuft lokal mit SQL Server
@@ -167,7 +167,7 @@ Wer darf Was:
 - [ ] Passwort vergessen / Zurücksetzen
 - [ ] Zwei-Faktor-Authentifizierung
 
-## 📁 Wichtige Dateien für zu Hause
+## 📁 Wichtige Dateien 
 | Datei | Pfad |
 |-------|------|
 | `StyleSheet.css` | `wwwroot/css/StyleSheet.css` |
@@ -180,7 +180,7 @@ Wer darf Was:
 | `Ticket.cs` | `Domain/Models/Ticket.cs` |
 | `Program.cs` | `Program.cs` |
 
-## 🛠️ Befehle für zu Hause
+## 🛠️ Befehle 
 ```bash
 # 1. Repository klonen
 git clone https://github.com/Adil-si/TicketSystem.git
