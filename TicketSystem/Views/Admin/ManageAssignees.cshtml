@@ -1,0 +1,84 @@
+﻿@model TicketSystem.Domain.Models.Ticket
+
+@{
+    ViewData["Title"] = "Mitarbeiter verwalten";
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle"></i> Fehler: Ticket nicht gefunden.
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="admin-card">
+                <div class="card-header">
+                    👥 Mitarbeiter für Ticket: #@Model.Id - @Model.Title
+                </div>
+                <div class="card-body">
+                    <!-- Vorhandene Mitarbeiter -->
+                    <h5>Aktuelle Mitarbeiter (@(ViewBag.CurrentAssignees != null ? ((IEnumerable<TicketAssignee>)ViewBag.CurrentAssignees).Count() : 0))</h5>
+
+                    @if (ViewBag.CurrentAssignees != null && ((IEnumerable<TicketAssignee>)ViewBag.CurrentAssignees).Any())
+                    {
+                        <div class="list-group mb-4">
+                            @foreach (var assignee in (IEnumerable<TicketAssignee>)ViewBag.CurrentAssignees)
+                            {
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="bi bi-person-check"></i>
+                                        <strong>@assignee.User?.Name</strong> (@assignee.User?.Email)
+                                        <br />
+                                        <small class="text-muted">Zugewiesen am: @assignee.AssignedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                                    </div>
+                                    <form asp-action="RemoveAssignee" method="post">
+                                        <input type="hidden" name="assigneeId" value="@assignee.Id" />
+                                        <input type="hidden" name="ticketId" value="@Model.Id" />
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Mitarbeiter wirklich entfernen?')">
+                                            <i class="bi bi-person-x"></i> Entfernen
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">Keine Mitarbeiter zugewiesen.</div>
+                    }
+
+                    <!-- Neuen Mitarbeiter hinzufügen -->
+                    <h5>Neuen Mitarbeiter hinzufügen</h5>
+                    <form asp-action="AddAssignee" method="post" class="row g-3">
+                        <input type="hidden" name="ticketId" value="@Model.Id" />
+                        <div class="col-md-8">
+                            <select name="userId" class="form-control" required>
+                                <option value="">-- Mitarbeiter auswählen --</option>
+                                @if (ViewBag.AvailableUsers != null)
+                                {
+                                    foreach (var user in ViewBag.AvailableUsers)
+                                    {
+                                        <option value="@user.Value">@user.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-person-plus"></i> Hinzufügen
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr />
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Zurück
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,108 @@
+﻿@model IEnumerable<TicketSystem.Domain.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+@if (Model == null)
+{
+    <div class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle"></i> Fehler: Keine Daten vorhanden.
+    </div>
+}
+else
+{
+<h2>🔧 Admin Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="admin-card">
+            <div class="card-body">
+                <h5>📊 Tickets <span class="badge bg-primary rounded-pill">@Model.Count()</span></h5>
+                <a asp-action="Index" class="btn btn-sm btn-primary mt-2">Alle anzeigen</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin-card">
+            <div class="card-body">
+                <h5>👥 Benutzer <span class="badge bg-primary rounded-pill">@ViewBag.UserCount</span></h5>
+                <a asp-action="Users" class="btn btn-sm btn-primary mt-2">Benutzer verwalten</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin-card">
+            <div class="card-body">
+                <h5>📁 Kategorien <span class="badge bg-primary rounded-pill">@ViewBag.CategoryCount</span></h5>
+                <a asp-action="Categories" class="btn btn-sm btn-primary mt-2">Kategorien verwalten</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Alle Tickets</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titel</th>
+            <th>Ersteller</th>
+            <th>Kategorie</th>
+            <th>Status</th>
+            <th>Erstellt</th>
+            <th>Aktionen</th>
+            <th>Team</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.Id</td>
+                <td>@ticket.Title</td>
+                <td>@(ticket.ApplicationUser?.Name ?? ticket.ApplicationUser?.Email ?? "Unbekannt")</td>
+                <td>@(ticket.Category?.Name ?? "Keine")</td>
+                <td>
+                    @if (ticket.Status == TicketStatus.Open)
+                    {
+                        <span class="badge bg-success">Offen</span>
+                    }
+                    else if (ticket.Status == TicketStatus.InProgress)
+                    {
+                        <span class="badge bg-warning">In Bearbeitung</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Geschlossen</span>
+                    }
+                </td>
+                <td>@ticket.CreatedAt.ToString("dd.MM.yyyy")</td>
+                <td>
+                    @if (ticket.Assignees != null && ticket.Assignees.Any())
+                    {
+                        <span class="badge bg-info">@ticket.Assignees.Count() Mitarbeiter</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Keine</span>
+                    }
+                    <a asp-action="ManageAssignees" asp-route-ticketId="@ticket.Id" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-people"></i> Verwalten
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-controller="Ticket" asp-action="Edit" asp-route-id="@ticket.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <form asp-action="DeleteTicket" asp-route-id="@ticket.Id" method="post" style="display:inline"
+                          onsubmit="return confirm('Ticket @ticket.Title wirklich löschen?')">
+                        <button type="submit" class="btn btn-sm btn-danger">Löschen</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Zurück</a>
+</div>

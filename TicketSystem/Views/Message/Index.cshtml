@@ -1,0 +1,82 @@
+﻿@model List<TicketSystem.Application.Services.MessageGroupDto>
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Nachrichten";
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-pencil-square"></i> Neue Nachricht</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Conversation" method="get">
+                    <div class="mb-3">
+                        <label class="form-label">Benutzer auswählen</label>
+                        <select name="userId" class="form-control" required>
+                            <option value="">-- Bitte wählen --</option>
+                            @foreach (var user in ViewBag.Users)
+                            {
+                                <option value="@user.Id">@user.Name (@user.Email)</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-chat"></i> Nachricht schreiben
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-envelope"></i> Konversationen</h5>
+                @if (ViewBag.UnreadCount > 0)
+                {
+                    <span class="badge bg-danger">@ViewBag.UnreadCount ungelesen</span>
+                }
+            </div>
+            <div class="card-body p-0">
+                @if (Model.Any())
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var group in Model)
+                        {
+                            <a asp-action="Conversation" asp-route-userId="@group.OtherUserId"
+                                   class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>@group.OtherUserName</strong>
+                                        <br />
+                                        <small class="text-muted">@group.LastMessage</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <small>@group.LastMessageTime.ToString("dd.MM.yyyy HH:mm")</small>
+                                        @if (group.UnreadCount > 0)
+                                        {
+                                            <div>
+                                                <span class="badge bg-danger rounded-pill">@group.UnreadCount</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center p-5">
+                        <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                        <p class="mt-2">Keine Nachrichten vorhanden.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

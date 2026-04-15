@@ -1,0 +1,40 @@
+﻿@model TicketSystem.Domain.Models.Category
+
+@{
+    ViewData["Title"] = "Kategorie erstellen";
+}
+
+<h2>📁 Neue Kategorie erstellen</h2>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="CreateCategory" method="post">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name *</label>
+                <input asp-for="Name" class="form-control" value="@ViewBag.PreFilledName" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Beschreibung</label>
+                <textarea asp-for="Description" class="form-control" rows="4"
+                          placeholder="Optional: Beschreibung der Kategorie..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Speichern
+            </button>
+            <a asp-action="Categories" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Zurück
+            </a>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

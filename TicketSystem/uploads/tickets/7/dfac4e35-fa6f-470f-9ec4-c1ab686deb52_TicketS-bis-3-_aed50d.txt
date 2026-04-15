@@ -1,0 +1,41 @@
+TicketSystem/
+├── Controllers/
+│   ├── AccountController.cs     ✅ Login/Register/Logout
+│   ├── AdminController.cs       ✅ Kategorien, User verwalten
+│   ├── HomeController.cs        ✅ Startseite
+│   └── TicketController.cs      ✅ Tickets + Attachments
+├── Views/
+│   ├── Ticket/
+│   │   ├── Index.cshtml         ✅ Alle Tickets
+│   │   ├── Create.cshtml        ✅ Ticket + Datei-Upload
+│   │   ├── Details.cshtml       ✅ Ticket + Attachments + Download
+│   │   └── Edit.cshtml          ✅ Ticket bearbeiten (Admin)
+│   ├── Admin/
+│   │   ├── Categories.cshtml    ✅ Kategorien-Liste
+│   │   └── CreateCategory.cshtml ✅ Kategorie erstellen
+│   └── Shared/
+│       └── _ValidationScriptsPartial.cshtml ✅ Validation
+├── wwwroot/
+│   └── uploads/
+│       └── tickets/
+│           └── {TicketId}/      ✅ Hochgeladene Dateien
+├── Domain/Models/
+│   ├── Ticket.cs                ✅ + Attachments
+│   ├── Category.cs              ✅
+│   ├── ApplicationUser.cs       ✅
+│   └── Attachment.cs            ✅ NEU
+├── Application/Services/
+│   ├── ITicketService.cs        ✅
+│   ├── TicketService.cs         ✅ + Delete mit Attachments
+│   ├── ICategoryService.cs      ✅ + UpdateCategoryAsync
+│   ├── CategoryService.cs       ✅
+│   ├── IAttachmentService.cs    ✅ NEU
+│   └── AttachmentService.cs     ✅ NEU
+└── Infrastructure/
+    ├── Data/
+    │   └── AppDbContext.cs      ✅ + Attachments DbSet
+    └── Repositories/
+        ├── TicketRepository.cs  ✅
+        ├── CategoryRepository.cs ✅
+        ├── UserRepository.cs    ✅
+        └── AttachmentRepository.cs ✅ NEU

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TicketSystem.Domain.Models.Category>
+
+@{
+    ViewData["Title"] = "Kategorien verwalten";
+}
+
+<h2>Kategorien</h2>
+
+<p>
+    <a asp-action="CreateCategory" class="btn btn-primary">Neue Kategorie erstellen</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Beschreibung</th>
+            <th>Aktionen</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+                <td>@category.Description</td>
+                <td>
+                    <form asp-action="DeleteCategory" asp-route-id="@category.Id" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Sind Sie sicher?')">
+                            Löschen
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

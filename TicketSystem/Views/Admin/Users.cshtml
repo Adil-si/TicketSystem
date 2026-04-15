@@ -1,0 +1,128 @@
+﻿@model IEnumerable<TicketSystem.Domain.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Benutzer verwalten";
+}
+
+<h2>👥 Benutzer verwalten</h2>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Rolle</th>
+                    <th>Status</th>
+                    <th>Erstellt am</th>
+                    <th>Aktionen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>
+                            @if (ViewBag.AdminEmails != null && ((List<string>)ViewBag.AdminEmails).Contains(user.Email))
+                            {
+                                <span class="badge bg-warning text-dark">Admin</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">User</span>
+                            }
+                        </td>
+                        <td>
+                            @if (user.IsLocked)
+                            {
+                                <span class="badge bg-danger">Gesperrt</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Aktiv</span>
+                            }
+                        </td>
+                        <td>@user.CreatedAt.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @if (!((List<string>)ViewBag.AdminEmails).Contains(user.Email))
+                            {
+                                @if (user.IsLocked)
+                                {
+                                    <form asp-action="UnlockUser" method="post" style="display:inline">
+                                        <input type="hidden" name="id" value="@user.Id" />
+                                        <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('@user.Name wirklich entsperren?')">
+                                            <i class="bi bi-unlock"></i> Entsperren
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#lockModal"
+                                            data-userid="@user.Id" data-username="@user.Name">
+                                        <i class="bi bi-lock"></i> Sperren
+                                    </button>
+                                }
+                                
+                                <a asp-action="MakeAdmin" asp-route-id="@user.Id" class="btn btn-sm btn-info"
+                                       onclick="return confirm('@user.Name zum Admin machen?')">
+                                    <i class="bi bi-shield"></i> Admin
+                                </a>
+                            }
+                            
+                            @if (User.Identity?.Name == user.Email)
+                            {
+                                <span class="text-muted">(Sie selbst)</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal für Sperr-Grund -->
+<div class="modal fade" id="lockModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-action="LockUser" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Benutzer sperren</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="lockUserId" />
+                    <div class="mb-3">
+                        <label class="form-label">Grund für Sperrung</label>
+                        <textarea name="reason" class="form-control" rows="3" placeholder="z.B. Verstoß gegen Richtlinien" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-danger">Sperren</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var lockModal = document.getElementById('lockModal');
+    lockModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var userId = button.getAttribute('data-userid');
+        var userName = button.getAttribute('data-username');
+        var modalTitle = lockModal.querySelector('.modal-title');
+        var userIdInput = lockModal.querySelector('#lockUserId');
+        
+        modalTitle.textContent = 'Benutzer sperren: ' + userName;
+        userIdInput.value = userId;
+    });
+</script>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Zurück</a>
+</div>

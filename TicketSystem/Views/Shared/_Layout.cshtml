@@ -1,0 +1,168 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using TicketSystem.Application.Services
+@inject IMessageService MessageService
+<!DOCTYPE html>
+<html lang="de" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TicketSystem</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    🎫 TicketSystem
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav ms-auto">
+                        <!-- ========== BEGRÜSSUNG (NEU) ========== -->
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userName = User.FindFirstValue(ClaimTypes.Name) ?? User.Identity.Name;
+                            <span class="navbar-user">
+                                <i class="bi bi-person-circle"></i> Hallo, @userName!
+                            </span>
+                        }
+                        <!-- ========== ENDE BEGRÜSSUNG ========== -->
+    
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Ticket" asp-action="Index">
+                                <i class="bi bi-ticket"></i> Tickets
+                            </a>
+                        </li>
+                        
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link nav-link-admin" asp-controller="Admin" asp-action="Index">
+                                        <i class="bi bi-shield-lock-fill"></i> ADMIN
+                                    </a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Ticket" asp-action="Create">
+                                    <i class="bi bi-plus-circle"></i> Ticket erstellen
+                                </a>
+                            </li>
+                            
+                            <!-- Nachrichten-Link -->
+                            {
+                                var unreadCount = 0;
+                                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";
+                                if (!string.IsNullOrEmpty(userId))
+                                {
+                                    unreadCount = MessageService.GetUnreadCountAsync(userId).GetAwaiter().GetResult();
+                                }
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Message" asp-action="Index">
+                                    <i class="bi bi-envelope"></i> Nachrichten
+                                    @{
+                                        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";
+                                        if (!string.IsNullOrEmpty(userId))
+                                        {
+                                            var count = MessageService.GetUnreadCountAsync(userId).GetAwaiter().GetResult();
+                                            if (count > 0)
+                                            {
+                                                <span class="badge bg-danger rounded-pill">@count</span>
+                                            }
+                                        }
+                                    }
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="form-inline">
+                                    <button type="submit" class="nav-link btn btn-link">
+                                        <i class="bi bi-box-arrow-right"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Login">
+                                    <i class="bi bi-box-arrow-in-right"></i> Login
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Register">
+                                    <i class="bi bi-person-plus"></i> Register
+                                </a>
+                            </li>
+                        }
+                        
+                        <!-- Dark Mode Toggle -->
+                        <li class="nav-item">
+                            <button id="themeToggle" class="theme-toggle" title="Dark/Light Mode">
+                                <i id="themeIcon" class="bi bi-moon-stars-fill"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Card -->
+        <div class="main-card">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dark Mode Funktion
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-bs-theme', theme);
+            localStorage.setItem('theme', theme);
+            const icon = document.getElementById('themeIcon');
+            if (theme === 'dark') {
+                icon.classList.remove('bi-moon-stars-fill');
+                icon.classList.add('bi-sun-fill');
+            } else {
+                icon.classList.remove('bi-sun-fill');
+                icon.classList.add('bi-moon-stars-fill');
+            }
+        }
+    
+        // Theme beim Laden prüfen
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+    
+        // Toggle Button Event
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

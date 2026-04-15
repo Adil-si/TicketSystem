@@ -1,0 +1,21 @@
+# Vor der Arbeit
+git pull origin develop
+
+
+
+# Nach der Arbeit
+git add .
+git commit -m "Was du gemacht hast"
+git push origin develop
+
+
+clonen
+
+git clone https://github.com/Adil-si/TicketSystem.git
+
+cd TicketSystem
+git checkout develop
+
+git pull origin develop               <= neuste virsion holen
+
+

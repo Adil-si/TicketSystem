@@ -1,0 +1,70 @@
+﻿@using System.Security.Claims
+@model IEnumerable<TicketSystem.Domain.Models.Message>
+@{
+    ViewData["Title"] = $"Chat mit {ViewBag.OtherUser?.Name}";
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>
+                    <i class="bi bi-chat-dots"></i>
+                    Chat mit @ViewBag.OtherUser?.Name
+                </h5>
+                <a asp-action="Index" class="btn btn-sm btn-secondary float-end">
+                    <i class="bi bi-arrow-left"></i> Zurück
+                </a>
+            </div>
+            
+            <div class="card-body" style="height: 500px; overflow-y: auto;">
+                @if (Model.Any())
+                {
+                    foreach (var message in Model)
+                    {
+                        if (message.SenderId == currentUserId)
+                        {
+                            <div class="d-flex justify-content-end mb-3">
+                                <div class="bg-primary text-white rounded p-2" style="max-width: 70%;">
+                                    <small class="text-white-50">@message.SentAt.ToString("HH:mm")</small>
+                                    <p class="mb-0">@message.Content</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="bg-light rounded p-2" style="max-width: 70%;">
+                                    <small class="text-muted">@message.SentAt.ToString("HH:mm")</small>
+                                    <p class="mb-0">@message.Content</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div class="text-center p-5">
+                        <i class="bi bi-chat" style="font-size: 3rem;"></i>
+                        <p class="mt-2">Noch keine Nachrichten.</p>
+                        <p>Schreiben Sie die erste Nachricht!</p>
+                    </div>
+                }
+            </div>
+            
+            <div class="card-footer">
+                <form asp-action="SendMessage" method="post">
+                    <input type="hidden" name="receiverId" value="@ViewBag.OtherUserId" />
+                    <div class="input-group">
+                        <textarea name="content" class="form-control" rows="2"
+                                  placeholder="Schreiben Sie eine Nachricht..." required></textarea>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send"></i> Senden
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

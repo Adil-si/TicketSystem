@@ -1,0 +1,96 @@
+✅ Implementierte Features
+1. Benutzerverwaltung
+Registrierung / Login / Logout
+
+Rollen: Admin und Benutzer
+
+Admin kann User löschen, zum Admin machen
+
+2. Ticket-System
+Tickets erstellen (mit Titel, Beschreibung, Kategorie)
+
+Datei-Upload (max. 10 MB, erlaubte Formate: jpg, png, pdf, doc, txt, zip)
+
+Ticket-Status: Open, InProgress, Closed
+
+Ticket löschen (nur Admin)
+
+Ticket schließen (nur wenn keine Blockierungen offen)
+
+3. Kommentare
+Kommentare zu Tickets hinzufügen
+
+Neueste zuerst anzeigen
+
+Admin kann Kommentare löschen
+
+4. Attachments
+Dateien zu Tickets hochladen
+
+Dateien herunterladen
+
+Dateien löschen (Admin)
+
+Anzeige von Dateiname, Größe, Uploader, Datum
+
+5. Ticket-Blockierung (Abhängigkeiten)
+Tickets können von anderen Tickets blockiert werden
+
+Blockierende Tickets werden auf Detailseite angezeigt
+
+Ticket kann erst geschlossen werden, wenn alle blockierenden Tickets geschlossen sind
+
+6. Nachrichten-System
+Private Nachrichten zwischen Benutzern
+
+Konversations-Liste (gruppiert nach Benutzer)
+
+Chat-Fenster mit Echtzeit-ähnlichem Verhalten
+
+Ungelesene Nachrichten mit Badge in Navbar
+
+7. Dashboard
+Statistik-Karten (Tickets gesamt, offen, in Bearbeitung, geschlossen)
+
+Beliebte Themen (Access, Facilities, QIAverse, Employee Services, Cloud Services, Ask an Expert)
+
+Quick Access (Request something, Knowledge base, Report an Issue)
+
+Work Items (Alle Anforderungen, Offene Tickets, etc. mit Prozenten)
+
+User Statistic (Total Users, Admins, Regular Users)
+
+Ticket Filter (Suche, Kategorie, Status, Sortierung)
+
+Chat-Box (simulierter Live Agent)
+
+Meine Tickets (kompakte Tabelle)
+
+8. Admin-Bereich
+Ticket-Übersicht mit Lösch-Funktion
+
+Benutzerverwaltung (User löschen, zum Admin machen)
+
+Kategorie-Verwaltung (CRUD)
+
+9. Design & UI
+Dunkelblauer Hintergrund für alle Karten
+
+Dauerhafter Glanz-Effekt (nur beim Laden)
+
+Dark Mode mit Toggle-Button
+
+Responsive Design (mobilfreundlich)
+
+Navbar mit Begrüßung (Hallo, Benutzername)
+
+Externe Links: GitHub, Google-Suche
+
+
+-----------------------------postgresql://ticketsystem_db_9lm8_user:ACaJR7Z4PchaXcvZ4bUwZANUZWjpaTqD@dpg-d76h75npm1nc7395url0-a/ticketsystem_db_9lm8-----------
+
+
+
+
+
+

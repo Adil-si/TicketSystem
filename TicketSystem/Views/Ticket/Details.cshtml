@@ -1,0 +1,264 @@
+﻿@model TicketSystem.Domain.Models.Ticket
+@using TicketSystem.Domain.Models
+
+@{
+    ViewData["Title"] = "Ticket Details";
+}
+
+<h2>Ticket Details</h2>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>@Model.Title</h3>
+    </div>
+    <div class="card-body">
+        <p><strong>Ersteller:</strong> @ViewBag.CreatorName</p>
+        <p>
+            <strong>Status:</strong>
+            @if (Model.Status == TicketStatus.Open)
+            {
+                <span class="badge bg-success">Offen</span>
+            }
+            else if (Model.Status == TicketStatus.InProgress)
+            {
+                <span class="badge bg-warning">In Bearbeitung</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Geschlossen</span>
+            }
+        </p>
+        <p><strong>Kategorie:</strong> @(Model.Category?.Name ?? "Keine")</p>
+        <p><strong>Abteilung:</strong> @(Model.Department?.Name ?? "-")</p>
+        <p><strong>Erstellt:</strong> @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+        @if (Model.UpdatedAt.HasValue)
+        {
+            <p><strong>Aktualisiert:</strong> @Model.UpdatedAt.Value.ToString("dd.MM.yyyy HH:mm")</p>
+        }
+        <p><strong>Beschreibung:</strong></p>
+        <p class="border p-3" style="background-color: #f8f9fa !important; color: #212529 !important;">
+            @Model.Description
+        </p>
+    </div>
+</div>
+
+<!-- ANHÄNGE ANZEIGEN -->
+@if (ViewBag.Attachments != null && ((IEnumerable<Attachment>)ViewBag.Attachments).Any())
+{
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>📎 Anhänge (@(((IEnumerable<Attachment>)ViewBag.Attachments).Count()) Dateien)</h4>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                @foreach (var attachment in (IEnumerable<Attachment>)ViewBag.Attachments)
+                {
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="bi bi-paperclip"></i>
+                                <strong>@attachment.FileName</strong>
+                                <br />
+                                <small class="text-muted">
+                                    Größe: @(attachment.FileSize / 1024) KB |
+                                    Hochgeladen: @attachment.UploadedAt.ToString("dd.MM.yyyy HH:mm") |
+                                    Von: @(attachment.Uploader?.Name ?? attachment.Uploader?.Email ?? "Unbekannt")
+                                </small>
+                            </div>
+                            <div>
+                                <a asp-action="DownloadAttachment" asp-route-id="@attachment.Id"
+                                       class="btn btn-sm btn-primary">
+                                    📥 Download
+                                </a>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <form asp-action="DeleteAttachment" asp-route-id="@attachment.Id"
+                                          method="post" style="display:inline"
+                                          onsubmit="return confirm('Datei wirklich löschen?')">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            🗑️ Löschen
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info mb-4">
+        📄 Keine Anhänge vorhanden.
+    </div>
+}
+
+<!-- KOMMENTARE -->
+<div class="card">
+    <div class="card-header">
+        <h4>💬 Kommentare (@(ViewBag.Comments != null ? ((IEnumerable<Comment>)ViewBag.Comments).Count() : 0))</h4>
+    </div>
+    <div class="card-body">
+        <!-- Kommentar hinzufügen Formular -->
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form asp-action="AddComment" method="post" class="mb-4">
+                <input type="hidden" name="ticketId" value="@Model.Id" />
+                <div class="mb-3">
+                    <label class="form-label">Neuer Kommentar</label>
+                    <textarea name="content" class="form-control" rows="3" required
+                              placeholder="Schreiben Sie einen Kommentar..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Kommentar hinzufügen</button>
+            </form>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <a asp-controller="Account" asp-action="Login">Melden Sie sich an</a> um Kommentare zu schreiben.
+            </div>
+        }
+        
+        <!-- Kommentare Liste -->
+        @if (ViewBag.Comments != null && ((IEnumerable<Comment>)ViewBag.Comments).Any())
+        {
+            <div class="comments-list">
+                @foreach (var comment in (IEnumerable<Comment>)ViewBag.Comments)
+                {
+                    <div class="border rounded p-3 mb-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <strong>@(comment.Author?.Name ?? comment.Author?.Email ?? "Unbekannt")</strong>
+                                <small class="text-muted ms-2">@comment.CreatedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                            </div>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <form asp-action="DeleteComment" method="post" style="display:inline"
+                                      onsubmit="return confirm('Kommentar wirklich löschen?')">
+                                    <input type="hidden" name="id" value="@comment.Id" />
+                                    <input type="hidden" name="ticketId" value="@Model.Id" />
+                                    <button type="submit" class="btn btn-sm btn-danger">🗑️ Löschen</button>
+                                </form>
+                            }
+                        </div>
+                        <p class="mt-2 mb-0">@comment.Content</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">Noch keine Kommentare. Seien Sie der Erste!</p>
+        }
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Zurück zur Übersicht</a>
+    
+    @if (User.Identity.IsAuthenticated && Model.Status != TicketStatus.Closed)
+    {
+        <a asp-action="Close" asp-route-id="@Model.Id" class="btn btn-danger"
+           onclick="return confirm('Ticket wirklich schließen?')">Ticket schließen</a>
+    }
+    
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Bearbeiten</a>
+    }
+</div>
+<!-- Blockierende Tickets -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h4>🔗 Blockierende Tickets</h4>
+    </div>
+    <div class="card-body">
+        @if (ViewBag.BlockingTickets != null && ((IEnumerable<BlockedBy>)ViewBag.BlockingTickets).Any())
+        {
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle"></i> Dieses Ticket wird von folgenden Tickets blockiert:
+            </div>
+            <ul class="list-group">
+                @foreach (var block in (IEnumerable<BlockedBy>)ViewBag.BlockingTickets)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a asp-action="Details" asp-route-id="@block.BlockedByTicketId">
+                                #@block.BlockedByTicketId - @block.BlockedByTicket?.Title
+                            </a>
+                            @if (block.BlockedByTicket?.Status == TicketStatus.Closed)
+                            {
+                                <span class="badge bg-success ms-2">✅ Gelöst</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger ms-2">⛔ Blockiert</span>
+                            }
+                        </div>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <form asp-action="RemoveBlock" method="post">
+                                <input type="hidden" name="blockId" value="@block.Id" />
+                                <input type="hidden" name="ticketId" value="@Model.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Blockierung wirklich entfernen?')">
+                                    🗑️ Entfernen
+                                </button>
+                            </form>
+                        }
+                    </li>
+                }
+            </ul>
+            
+            @if (!ViewBag.CanClose)
+            {
+                <div class="alert alert-danger mt-3">
+                    <i class="bi bi-lock"></i> Dieses Ticket kann erst geschlossen werden, wenn alle blockierenden Tickets gelöst wurden!
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted">Dieses Ticket wird von keinem anderen Ticket blockiert.</p>
+        }
+    </div>
+</div>
+
+<!-- Blockierung hinzufügen -->
+@if (User.IsInRole("Admin") && ViewBag.AvailableTickets != null && ((IEnumerable<Ticket>)ViewBag.AvailableTickets).Any())
+{
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>➕ Blockierung hinzufügen</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="AddBlock" method="post">
+                <input type="hidden" name="ticketId" value="@Model.Id" />
+                <div class="row">
+                    <div class="col-md-8">
+                        <select name="blockedByTicketId" class="form-control" required>
+                            <option value="">-- Ticket auswählen, das dieses Ticket blockiert --</option>
+                            @foreach (var ticket in (IEnumerable<Ticket>)ViewBag.AvailableTickets)
+                            {
+                                <option value="@ticket.Id">
+                                    #@ticket.Id - @ticket.Title (@ticket.Status)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-warning w-100">
+                            <i class="bi bi-link"></i> Blockierung hinzufügen
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
