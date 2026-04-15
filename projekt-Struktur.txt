@@ -87,7 +87,6 @@ Navbar mit Begrüßung (Hallo, Benutzername)
 Externe Links: GitHub, Google-Suche
 
 
------------------------------postgresql://ticketsystem_db_9lm8_user:ACaJR7Z4PchaXcvZ4bUwZANUZWjpaTqD@dpg-d76h75npm1nc7395url0-a/ticketsystem_db_9lm8-----------
 
 
 
