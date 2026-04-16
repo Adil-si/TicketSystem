@@ -12,12 +12,12 @@
 - ✅ Kommentare zu Tickets (neueste zuerst)
 - ✅ Ticket-Blockierung (Abhängigkeiten zwischen Tickets)
 - ✅ Team-Zusammenarbeit (mehrere Mitarbeiter pro Ticket)
-- 
+  
 ###T   icket-Prioritäten
-  ✅ TicketPriority Enum (Low, Medium, High, Urgent)
-  ✅ Migration AddTicketPriority
-  ✅ Priorität in Create, Edit, Index, Details
-  ✅ Prioritäts-Statistik im Dashboard
+- ✅ TicketPriority Enum (Low, Medium, High, Urgent)
+- ✅ Migration AddTicketPriority
+- ✅ Priorität in Create, Edit, Index, Details
+- ✅ Prioritäts-Statistik im Dashboard
   
 ### 👥 Benutzer & Rollen
 - ✅ Registrierung, Login, Logout
@@ -26,11 +26,11 @@
 - ✅ Admin kann User zum Admin machen
   
 ###  Teamleiter-Rolle
-  ✅ Neue Rolle Teamleiter in Program.cs
-  ✅ Teamleiter-User erstellt (teamleiter@ticket.de / Team123!)
-  ✅ AdminController.cs für Teamleiter angepasst
-  ✅ MakeTeamleiter und RemoveTeamleiter Methoden
-  ✅ ViewBag.TeamleiterIds in Users() Methode
+- ✅ Neue Rolle Teamleiter in Program.cs
+- ✅ Teamleiter-User erstellt (teamleiter@ticket.de / Team123!)
+- ✅ AdminController.cs für Teamleiter angepasst
+- ✅ MakeTeamleiter und RemoveTeamleiter Methoden
+- ✅ ViewBag.TeamleiterIds in Users() Methode
 
 ### 📊 Dashboard
 - ✅ Statistik-Karten (Tickets gesamt, offen, in Bearbeitung, geschlossen)
@@ -46,12 +46,12 @@
 - ✅ Private Nachrichten zwischen Benutzern
 - ✅ Konversationen gruppiert nach Benutzer
 - ✅ Ungelesene Badges in Navbar
-- 
+  
 ###   Benutzerverwaltung (Users.cshtml)
-  ✅ Teamleiter Badge in der Tabelle
-  ✅ Teamleiter hinzufügen/entfernen Buttons (nur für Admin)
-  ✅ lockUser JavaScript Funktion (mit Prompt)
-  ✅ Korrektur der </td und </tr Tags (Fehler behoben)
+- ✅ Teamleiter Badge in der Tabelle
+- ✅ Teamleiter hinzufügen/entfernen Buttons (nur für Admin)
+- ✅ lockUser JavaScript Funktion (mit Prompt)
+- ✅ Korrektur der </td und </tr Tags (Fehler behoben)
   
 ### 🏢 Verwaltung (Admin)
 - ✅ Kategorien verwalten (CRUD)
@@ -60,11 +60,11 @@
 - ✅ Mitarbeiter zu Tickets zuweisen
   
 ###  Navigation (_Layout.cshtml)
-  ✅ Begrüßung mit Benutzername
-  ✅ Admin sieht nur ADMIN Link (orange)
-  ✅ Teamleiter sieht: Team Dashboard, Kategorien, Teammitglieder
-  ✅ Nachrichten-Link mit Badge
-  ✅ Dark Mode Toggle
+- ✅ Begrüßung mit Benutzername
+- ✅ Admin sieht nur ADMIN Link (orange)
+- ✅ Teamleiter sieht: Team Dashboard, Kategorien, Teammitglieder
+- ✅ Nachrichten-Link mit Badge
+- ✅ Dark Mode Toggle
   
 ### 🎨 Design
 - ✅ Dark Mode (umschaltbar, bleibt gespeichert)
@@ -73,7 +73,7 @@
 - ✅ Glanz-Effekt beim Laden
   
 ##  TeamUsers.cshtml (für Teamleiter)
-  ✅ Teamleiter sieht Teammitglieder (nur lesen, keine Aktionen)
+- ✅ Teamleiter sieht Teammitglieder (nur lesen, keine Aktionen)
 
 ---
 
