@@ -117,29 +117,29 @@ git branch -d develop	Löscht develop lokal
 
 ---
 Wer darf Was: 
-| Aktion                   | Admin     | Ticket-Ersteller     | Andere User |
-|--------                  |-------    |------------------    |-------------|
-| Ticket  erstellen          | ✅          | ✅                   ✅ |
+| Aktion                   | Admin     | Ticket-Ersteller     | Andere User |                   |  Teamleiter  |
+|--------                  |-------    |------------------    |-------------|                     -------------
+| Ticket  erstellen          | ✅          | ✅                   ✅ |                               ✅
 
-| Eigene Tickets ansehen     | ✅          | ✅                   ✅ |
+| Eigene Tickets ansehen     | ✅          | ✅                   ✅ |                               ✅
 
-| Fremde Tickets ansehen     | ✅        ❌ (nur eigene Ag)|    ❌ (nur eigene Abteilung) 
+| Fremde Tickets ansehen     | ✅        ❌ (nur eigene Ag)|    ❌ (nur eigene Abteilung)            ❌
 
-| Ticket bearbeiten          | ✅          | ✅                 | ❌ |
-| Ticket schließen           | ✅          | ✅                 | ❌ |
-| Ticket löschen             | ✅          | ❌                 | ❌ |
-| Kommentar hinzufügen       | ✅          | ✅                 | ✅ |
-| Kommentar löschen          | ✅          | ❌                 | ❌ |
-| Attachment hochladen       | ✅          | ✅                 | ✅ |
-| Attachment löschen         | ✅          | ❌                 | ❌ |
-| Ticket blockieren          | ✅          | ❌                 | ❌ |
-| Mitarbeiter zuweisen       | ✅          | ❌                 | ❌ |
-| User sperren/entsperren    | ✅          | ❌                 | ❌ |
-| User zum Admin machen      | ✅          | ❌                 | ❌ |
-| Kategorien verwalten       | ✅          | ❌                 | ❌ |
-| Abteilungen verwalten      | ✅          | ❌                 | ❌ |
-| Nachrichten senden         | ✅          | ✅                 | ✅ |
-| Dashboard sehen            | ✅          | ✅                 | ✅ |
+| Ticket bearbeiten          | ✅          | ✅                 | ❌ |                               ✅ 
+| Ticket schließen           | ✅          | ✅                 | ❌ |                               ❌ (nur eigene Abteilung)
+| Ticket löschen             | ✅          | ❌                 | ❌ |                               ❌
+| Kommentar hinzufügen       | ✅          | ✅                 | ✅ |                               ✅ 
+| Kommentar löschen          | ✅          | ❌                 | ❌ |                               ❌
+| Attachment hochladen       | ✅          | ✅                 | ✅ |                               ✅
+| Attachment löschen         | ✅          | ❌                 | ❌ |                               ❌
+| Ticket blockieren          | ✅          | ❌                 | ❌ |                               ✅
+| Mitarbeiter zuweisen       | ✅          | ❌                 | ❌ |                               ✅
+| User sperren/entsperren    | ✅          | ❌                 | ❌ |                               ❌
+| User zum Admin machen      | ✅          | ❌                 | ❌ |                               ❌
+| Kategorien verwalten       | ✅          | ❌                 | ❌ |                               ✅
+| Abteilungen verwalten      | ✅          | ❌                 | ❌ |                               ❌
+| Nachrichten senden         | ✅          | ✅                 | ✅ |                               ✅
+| Dashboard sehen            | ✅          | ✅                 | ✅ |                               ✅
 
 ---
 
