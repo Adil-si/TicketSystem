@@ -24,6 +24,10 @@
         <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
+    <div class="mb-3">
+        <label asp-for="Priority" class="form-label">Priorität</label>
+        <select asp-for="Priority" class="form-control" asp-items="Html.GetEnumSelectList<TicketPriority>()"></select>
+    </div>
 
     <div class="mb-3">
         <label asp-for="CategoryId" class="form-label">Kategorie *</label>

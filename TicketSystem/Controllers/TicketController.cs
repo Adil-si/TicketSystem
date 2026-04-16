@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Azure.Documents;
-using Nest;
+//using Microsoft.Azure.Documents;
+//using Nest;
 using System.Net.Mail;
 using System.Security.Claims;
 using TicketSystem.Application.Services;
@@ -20,6 +20,7 @@ namespace TicketSystem.Controllers
         private readonly ICommentService _commentService;
         private readonly IBlockedByService _blockedByService;
         private readonly IDepartmentService _departmentService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public TicketController(ITicketService ticketService,
             ICategoryService categoryService,
@@ -27,7 +28,8 @@ namespace TicketSystem.Controllers
             IUserService userService,
             ICommentService commentService,
             IBlockedByService blockedByService,
-            IDepartmentService departmentService)
+            IDepartmentService departmentService,
+            UserManager<ApplicationUser> userManager)
         {
             _ticketService = ticketService;
             _categoryService = categoryService;
@@ -36,6 +38,7 @@ namespace TicketSystem.Controllers
             _commentService = commentService;
             _blockedByService = blockedByService;
             _departmentService = departmentService;
+            _userManager = userManager;
         }
 
 
@@ -226,24 +229,26 @@ namespace TicketSystem.Controllers
 
             return RedirectToAction("Details", new { id = ticketId });
         }
-        
+
 
         //edit
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Teamleiter")]
         public async Task<IActionResult> Edit(int id)
         {
             var ticket = await _ticketService.GetTicketByIdAsync(id);
             if (ticket == null) return NotFound();
 
-            // Nur Admin ODER Ticket-Ersteller darf bearbeiten
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = User.IsInRole("Admin");
-
-            if (!isAdmin && ticket.ApplicationUserId != userId)
+            // Teamleiter darf nur Tickets seiner Abteilung bearbeiten
+            if (!User.IsInRole("Admin"))
             {
-                TempData["Error"] = "Sie können nur Ihre eigenen Tickets bearbeiten!";
-                return RedirectToAction("Index");
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await _userManager.FindByIdAsync(userId);
+                if (ticket.DepartmentId != user.DepartmentId)
+                {
+                    TempData["Error"] = "Sie können nur Tickets Ihrer Abteilung bearbeiten!";
+                    return RedirectToAction("Index");
+                }
             }
 
             var categories = await _categoryService.GetAllCategoriesAsync();
@@ -346,20 +351,22 @@ namespace TicketSystem.Controllers
         }
 
         // ticket schließen
-        [Authorize]
+        [Authorize(Roles = "Admin, Teamleiter")]
         public async Task<IActionResult> Close(int id)
         {
             var ticket = await _ticketService.GetTicketByIdAsync(id);
             if (ticket == null) return NotFound();
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = User.IsInRole("Admin");
-
-            // Nur Admin ODER Ticket-Ersteller darf schließen
-            if (!isAdmin && ticket.ApplicationUserId != userId)
+            // Teamleiter darf nur Tickets seiner Abteilung schließen
+            if (!User.IsInRole("Admin"))
             {
-                TempData["Error"] = "Sie können nur Ihre eigenen Tickets schließen!";
-                return RedirectToAction("Details", new { id });
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await _userManager.FindByIdAsync(userId);
+                if (ticket.DepartmentId != user.DepartmentId)
+                {
+                    TempData["Error"] = "Sie können nur Tickets Ihrer Abteilung schließen!";
+                    return RedirectToAction("Index");
+                }
             }
 
             if (!await _blockedByService.CanCloseTicketAsync(id))

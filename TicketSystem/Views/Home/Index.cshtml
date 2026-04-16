@@ -6,77 +6,141 @@
 }
 
 <style>
-    .glow-line {
-        position: relative;
-        overflow: hidden;
+    /* Kompakte Karten */
+    .card .card-header {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.8rem !important;
+        font-weight: 600 !important;
     }
-    .glow-line:hover::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        animation: shine 0.8s ease;
+    .card .card-body {
+        padding: 0.75rem !important;
     }
-    @@keyframes shine {
-        0% { left: -100%; }
-        100% { left: 100%; }
+    .quick-card {
+        padding: 0.5rem !important;
+    }
+    .quick-card i {
+        font-size: 1.3rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+    .quick-card .fw-bold {
+        font-size: 0.75rem !important;
+        margin-bottom: 0 !important;
+    }
+    .quick-card small {
+        font-size: 0.6rem !important;
+    }
+    .trending-topic {
+        padding: 0.4rem 0.6rem !important;
+        font-size: 0.7rem !important;
+        gap: 0.5rem !important;
+    }
+    .topic-icon {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 0.8rem !important;
+    }
+    .workflow-item {
+        padding: 0.4rem 0 !important;
+        font-size: 0.7rem !important;
+    }
+    .stat-item {
+        padding: 0.4rem 0 !important;
+    }
+    .stat-label {
+        font-size: 0.7rem !important;
+    }
+    .stat-value {
+        font-size: 0.9rem !important;
     }
     .progress-small {
-        width: 80px;
-        height: 6px;
-        background: #e2e8f0;
-        border-radius: 3px;
-        overflow: hidden;
+        width: 60px !important;
+        height: 4px !important;
     }
-    .progress-small .fill {
-        height: 100%;
-        background: #2563eb;
-        border-radius: 3px;
+    .btn-sm {
+        padding: 0.2rem 0.4rem !important;
+        font-size: 0.7rem !important;
     }
-</style>
-<style>
-    /* Chat immer weiß mit dunkler Schrift */
+    .filter-card .form-control,
+    .filter-card .form-select {
+        font-size: 0.7rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
     .chat-message {
-        background: #ffffff !important;
-        color: #111827 !important;
-    }
-    .chat-message small {
-        color: #6c757d !important;
-    }
-    .chat-message div {
-        color: #111827 !important;
-    }
-    .chat-message.sent {
-        background: #e8f5e9 !important;
-    }
-    [data-bs-theme="dark"] .chat-message {
-        background: #ffffff !important;
-        color: #111827 !important;
-    }
-    [data-bs-theme="dark"] .chat-message.sent {
-        background: #e8f5e9 !important;
+        padding: 0.4rem !important;
+        font-size: 0.7rem !important;
+        margin-bottom: 0.5rem !important;
     }
     .chat-input-group input {
-        background: #ffffff !important;
-        color: #111827 !important;
+        font-size: 0.7rem !important;
+        padding: 0.3rem 0.5rem !important;
     }
-    [data-bs-theme="dark"] .chat-input-group input {
-        background: #ffffff !important;
-        color: #111827 !important;
+    h2 {
+        font-size: 1.3rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    h3 {
+        font-size: 1rem !important;
+        margin-bottom: 0 !important;
+    }
+    h5 {
+        font-size: 0.8rem !important;
+        margin-bottom: 0 !important;
+    }
+    .stat-card .card-body {
+        padding: 0.5rem !important;
+    }
+    .stat-card h2 {
+        font-size: 1.2rem !important;
+    }
+    .stat-card h5 {
+        font-size: 0.7rem !important;
     }
 </style>
 
 <div class="row">
-    <!-- ========== LINKE SPALTE ========== -->
+    <!-- Linke Spalte -->
     <div class="col-lg-8">
+        <!-- Statistik Karten -->
+        <div class="row g-2 mb-3">
+            <div class="col-md-3">
+                <div class="stat-card card-total">
+                    <div class="card-body text-center">
+                        <h5>📊 Tickets</h5>
+                        <h2>@Model.TotalTickets</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card card-open">
+                    <div class="card-body text-center">
+                        <h5>🟢 Offen</h5>
+                        <h2>@Model.OpenTickets</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card card-progress">
+                    <div class="card-body text-center">
+                        <h5>🟡 In Bearb.</h5>
+                        <h2>@Model.InProgressTickets</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card card-closed">
+                    <div class="card-body text-center">
+                        <h5>🔒 Geschl.</h5>
+                        <h2>@Model.ClosedTickets</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Beliebte Themen -->
-        <div class="card mb-4">
-            <div class="card-header bg-white fw-bold">⭐ Beliebte Themen</div>
-            <div class="card-body">
-                <div class="row">
+        <div class="card mb-3">
+            <div class="card-header">⭐ Beliebte Themen</div>
+            <div class="card-body p-2">
+                <div class="row g-1">
                     <div class="col-md-6">
                         <div class="trending-topic" onclick="location.href='/Ticket/Index'">
                             <div class="topic-icon"><i class="bi bi-key"></i></div>
@@ -92,21 +156,21 @@
                         </div>
                         <div class="trending-topic" onclick="location.href='/Ticket/Create?category=Urlaub'">
                             <div class="topic-icon"><i class="bi bi-calendar-check"></i></div>
-                            <span>Urlaubsantrag</span>
+                            <span>Urlaub</span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="trending-topic" onclick="location.href='https://github.com/Adil-si'">
                             <div class="topic-icon"><i class="bi bi-cloud"></i></div>
-                            <span>Cloud Services</span>
+                            <span>GitHub</span>
                         </div>
                         <div class="trending-topic" onclick="window.open('https://www.google.com/search?q=Ticket+System+Hilfe', '_blank')">
                             <div class="topic-icon"><i class="bi bi-chat-dots"></i></div>
-                            <span>Ask an Expert</span>
+                            <span>Google</span>
                         </div>
                         <div class="trending-topic text-muted">
                             <div class="topic-icon"><i class="bi bi-shield-lock"></i></div>
-                            <span class="small">You don't have the required permission to view approvals</span>
+                            <span class="small">Keine Berechtigung</span>
                         </div>
                     </div>
                 </div>
@@ -114,29 +178,29 @@
         </div>
 
         <!-- Quick Access -->
-        <div class="card mb-4">
-            <div class="card-header bg-white fw-bold">⚡ Quick Access</div>
-            <div class="card-body">
-                <div class="row">
+        <div class="card mb-3">
+            <div class="card-header">⚡ Quick Access</div>
+            <div class="card-body p-2">
+                <div class="row g-2">
                     <div class="col-md-4">
-                        <div class="quick-card" onclick="location.href='/Ticket/Create'">
+                        <div class="quick-card text-center" onclick="location.href='/Ticket/Create'">
                             <i class="bi bi-file-text text-primary"></i>
-                            <div class="fw-bold">Request something</div>
-                            <small class="text-muted">Request (Access/Devices/Services/Reports)</small>
+                            <div class="fw-bold">Request</div>
+                            <small>Access/Devices</small>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="quick-card" onclick="location.href='/Admin/Categories'">
+                        <div class="quick-card text-center" onclick="location.href='/Admin/Categories'">
                             <i class="bi bi-journal-bookmark-fill text-success"></i>
-                            <div class="fw-bold">Knowledge base</div>
-                            <small class="text-muted">Knowledge Articles & Reference guides</small>
+                            <div class="fw-bold">Knowledge</div>
+                            <small>Articles</small>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="quick-card" onclick="location.href='/Ticket/Create'">
+                        <div class="quick-card text-center" onclick="location.href='/Ticket/Create'">
                             <i class="bi bi-bug text-danger"></i>
-                            <div class="fw-bold">Report an Issue</div>
-                            <small class="text-muted">Something is broken / Troubleshooting</small>
+                            <div class="fw-bold">Report</div>
+                            <small>Issue</small>
                         </div>
                     </div>
                 </div>
@@ -144,171 +208,141 @@
         </div>
 
         <!-- Work Items -->
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header bg-white fw-bold">📋 Work items</div>
-                    <div class="card-body">
-                        @{
-                            var total = Model.TotalTickets > 0 ? Model.TotalTickets : 1;
-                            var openPercent = (Model.OpenTickets * 100) / total;
-                            var progressPercent = (Model.InProgressTickets * 100) / total;
-                            var closedPercent = (Model.ClosedTickets * 100) / total;
-                        }
-                        <div class="workflow-item glow-line" onclick="location.href='/Ticket/Index?filter=all'">
-                            <div>
-                                <span>📋 Alle Anforderungen</span>
-                                <div class="progress-small mt-1"><div class="fill" style="width: 100%"></div></div>
-                            </div>
-                            <div class="text-end">
-                                <strong>@Model.TotalTickets</strong>
-                                <small class="text-muted ms-1">(100%)</small>
-                            </div>
-                        </div>
-                        <div class="workflow-item glow-line" onclick="location.href='/Ticket/Index?status=Open'">
-                            <div>
-                                <span>🟢 Offene Tickets</span>
-                                <div class="progress-small mt-1"><div class="fill" style="width: @openPercent%"></div></div>
-                            </div>
-                            <div class="text-end">
-                                <strong>@Model.OpenTickets</strong>
-                                <small class="text-muted ms-1">(@openPercent%)</small>
-                            </div>
-                        </div>
-                        <div class="workflow-item glow-line" onclick="location.href='/Ticket/Index?status=InProgress'">
-                            <div>
-                                <span>🟡 In Bearbeitung</span>
-                                <div class="progress-small mt-1"><div class="fill" style="width: @progressPercent%"></div></div>
-                            </div>
-                            <div class="text-end">
-                                <strong>@Model.InProgressTickets</strong>
-                                <small class="text-muted ms-1">(@progressPercent%)</small>
-                            </div>
-                        </div>
-                        <div class="workflow-item glow-line" onclick="location.href='/Ticket/Index?status=Closed'">
-                            <div>
-                                <span>🔒 Geschlossen</span>
-                                <div class="progress-small mt-1"><div class="fill" style="width: @closedPercent%"></div></div>
-                            </div>
-                            <div class="text-end">
-                                <strong>@Model.ClosedTickets</strong>
-                                <small class="text-muted ms-1">(@closedPercent%)</small>
-                            </div>
-                        </div>
-                        <div class="workflow-item glow-line" onclick="location.href='/Ticket/Index?filter=mytickets'">
-                            <span>👤 Meine Tickets</span>
-                            <small class="text-muted">Meine eigenen</small>
-                        </div>
+        <div class="card mb-3">
+            <div class="card-header">📋 Work items</div>
+            <div class="card-body p-2">
+                @{
+                    var total = Model.TotalTickets > 0 ? Model.TotalTickets : 1;
+                    var openPercent = (Model.OpenTickets * 100) / total;
+                    var progressPercent = (Model.InProgressTickets * 100) / total;
+                    var closedPercent = (Model.ClosedTickets * 100) / total;
+                }
+                <div class="workflow-item" onclick="location.href='/Ticket/Index'">
+                    <span>📋 Alle</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="progress-small"><div class="fill" style="width: 100%"></div></div>
+                        <strong>@Model.TotalTickets</strong>
+                    </div>
+                </div>
+                <div class="workflow-item" onclick="location.href='/Ticket/Index?status=Open'">
+                    <span>🟢 Offen</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="progress-small"><div class="fill" style="width: @openPercent%"></div></div>
+                        <strong>@Model.OpenTickets</strong>
+                    </div>
+                </div>
+                <div class="workflow-item" onclick="location.href='/Ticket/Index?status=InProgress'">
+                    <span>🟡 In Bearb.</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="progress-small"><div class="fill" style="width: @progressPercent%"></div></div>
+                        <strong>@Model.InProgressTickets</strong>
+                    </div>
+                </div>
+                <div class="workflow-item" onclick="location.href='/Ticket/Index?status=Closed'">
+                    <span>🔒 Geschl.</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="progress-small"><div class="fill" style="width: @closedPercent%"></div></div>
+                        <strong>@Model.ClosedTickets</strong>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========== RECHTE SPALTE ========== -->
+    <!-- Rechte Spalte -->
     <div class="col-lg-4">
         <!-- User Statistic -->
-        <div class="card mb-4">
-            <div class="card-header bg-white fw-bold">📊 User Statistic</div>
-            <div class="card-body">
-                <div class="stat-item">
-                    <span class="stat-label"><i class="bi bi-people"></i> Total Users</span>
-                    <span class="stat-value text-primary">@Model.TotalUsers</span>
+        <div class="card mb-3">
+            <div class="card-header">📊 User Statistic</div>
+            <div class="card-body p-2">
+                <div class="stat-item d-flex justify-content-between">
+                    <span class="stat-label">👥 Total</span>
+                    <span class="stat-value">@Model.TotalUsers</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label"><i class="bi bi-shield-lock"></i> Admins</span>
-                    <span class="stat-value text-warning">@Model.AdminCount</span>
+                <div class="stat-item d-flex justify-content-between">
+                    <span class="stat-label">🛡️ Admins</span>
+                    <span class="stat-value">@Model.AdminCount</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label"><i class="bi bi-person"></i> Regular Users</span>
-                    <span class="stat-value text-success">@Model.UserCount</span>
+                <div class="stat-item d-flex justify-content-between">
+                    <span class="stat-label">👤 Regular</span>
+                    <span class="stat-value">@Model.UserCount</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label"><i class="bi bi-ticket"></i> Total Tickets</span>
-                    <span class="stat-value text-info">@Model.TotalTickets</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label"><i class="bi bi-chat-dots"></i> Active Chats</span>
-                    <span class="stat-value">3</span>
+                <div class="stat-item d-flex justify-content-between">
+                    <span class="stat-label">🎫 Tickets</span>
+                    <span class="stat-value">@Model.TotalTickets</span>
                 </div>
             </div>
         </div>
 
         <!-- Ticket Filter -->
-        <div class="card mb-4">
-            <div class="card-header bg-white fw-bold">🔍 Ticket Filter</div>
-            <div class="card-body">
+        <div class="card mb-3">
+            <div class="card-header">🔍 Filter</div>
+            <div class="card-body p-2">
                 <form method="get" asp-action="Index">
-                    <div class="mb-2">
-                        <input type="text" name="searchTerm" class="form-control form-control-sm"
-                               placeholder="🔎 Titel / Beschreibung" value="@ViewBag.SearchTerm" />
+                    <div class="mb-1">
+                        <input type="text" name="searchTerm" class="form-control form-control-sm" placeholder="🔎 Titel" value="@ViewBag.SearchTerm" />
                     </div>
-                    <div class="row g-1 mb-2">
+                    <div class="row g-1 mb-1">
                         <div class="col-6">
                             <select name="category" class="form-select form-select-sm">
-                                <option value="">Alle Kategorien</option>
+                                <option value="">Kategorie</option>
                                 @foreach (var cat in ViewBag.Categories)
                                 {
-                                    <option value="@cat.Name" selected="@(ViewBag.SelectedCategory == cat.Name)">
-                                        @cat.Name
-                                    </option>
+                                    <option value="@cat.Name">@cat.Name</option>
                                 }
                             </select>
                         </div>
                         <div class="col-6">
                             <select name="department" class="form-select form-select-sm">
-                                <option value="">Alle Abteilungen</option>
+                                <option value="">Abteilung</option>
                                 @foreach (var dept in ViewBag.Departments)
                                 {
                                     <option value="@dept.Id">@dept.Name</option>
                                 }
                             </select>
                         </div>
-                        <div class="col-6 mt-2">
+                    </div>
+                    <div class="row g-1 mb-1">
+                        <div class="col-6">
                             <select name="status" class="form-select form-select-sm">
-                                <option value="">Alle Status</option>
-                                <option value="Open" selected="@(ViewBag.SelectedStatus == "Open")">Offen</option>
-                                <option value="InProgress" selected="@(ViewBag.SelectedStatus == "InProgress")">In Bearbeitung</option>
-                                <option value="Closed" selected="@(ViewBag.SelectedStatus == "Closed")">Geschlossen</option>
+                                <option value="">Status</option>
+                                <option value="Open">Offen</option>
+                                <option value="InProgress">In Bearb.</option>
+                                <option value="Closed">Geschl.</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <select name="sortBy" class="form-select form-select-sm">
+                                <option value="date">Neueste</option>
+                                <option value="name">Name A-Z</option>
                             </select>
                         </div>
                     </div>
-                    <div class="mb-2">
-                        <select name="sortBy" class="form-select form-select-sm">
-                            <option value="date" selected="@(ViewBag.SortBy == "date")">Neueste zuerst</option>
-                            <option value="name" selected="@(ViewBag.SortBy == "name")">Name A-Z</option>
-                            <option value="name_desc" selected="@(ViewBag.SortBy == "name_desc")">Name Z-A</option>
-                        </select>
-                    </div>
                     <button type="submit" class="btn btn-primary btn-sm w-100">Filtern</button>
                 </form>
-                @if (ViewBag.FilteredCount > 0)
-                {
-                    <p class="mt-2 mb-0 small text-muted">@ViewBag.FilteredCount Tickets gefunden</p>
-                }
             </div>
         </div>
 
-        <!-- Chat Box (HIER IST SIE RICHTIG!) -->
+        <!-- Chat Box -->
         <div class="card">
-            <div class="card-header bg-white fw-bold">💬 Chat</div>
-            <div class="card-body" style="height: 300px; display: flex; flex-direction: column;">
-                <div id="chatMessages" style="flex: 1; overflow-y: auto; margin-bottom: 1rem;">
+            <div class="card-header">💬 Chat</div>
+            <div class="card-body p-2" style="height: 250px; display: flex; flex-direction: column;">
+                <div id="chatMessages" style="flex: 1; overflow-y: auto; margin-bottom: 0.5rem; font-size: 0.7rem;">
                     <div class="chat-message">
-                        <small class="text-muted">Admin • 10:30</small>
+                        <small>Admin • 10:30</small>
                         <div>Hallo! Wie kann ich helfen?</div>
                     </div>
                     <div class="chat-message sent">
-                        <small class="text-muted">Sie • 10:32</small>
-                        <div>Ich habe ein Problem mit meinem Ticket</div>
+                        <small>Sie • 10:32</small>
+                        <div>Problem mit Ticket</div>
                     </div>
                     <div class="chat-message">
-                        <small class="text-muted">Admin • 10:33</small>
-                        <div>Kannst du mir die Ticket-Nummer geben?</div>
+                        <small>Admin • 10:33</small>
+                        <div>Ticket-Nummer?</div>
                     </div>
                 </div>
-                <div class="chat-input-group">
-                    <input type="text" id="chatInput" placeholder="Nachricht schreiben..." />
+                <div class="chat-input-group d-flex gap-1">
+                    <input type="text" id="chatInput" class="form-control form-control-sm" placeholder="Nachricht..." />
                     <button class="btn btn-primary btn-sm" onclick="sendChatMessage()">
                         <i class="bi bi-send"></i>
                     </button>
@@ -319,13 +353,13 @@
 </div>
 
 <!-- Ticket Liste -->
-<div class="card mt-4">
-    <div class="card-header bg-white fw-bold">🎫 Meine Tickets</div>
+<div class="card mt-3">
+    <div class="card-header">🎫 Meine Tickets</div>
     <div class="card-body p-0">
         @if (ViewBag.TicketsWithCreator != null && ((IEnumerable<dynamic>)ViewBag.TicketsWithCreator).Any())
         {
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
+                <table class="table table-sm mb-0" style="font-size: 0.7rem;">
                     <thead class="table-light">
                         <tr>
                             <th>ID</th>
@@ -339,24 +373,24 @@
                         @foreach (var item in ViewBag.TicketsWithCreator)
                         {
                             <tr onclick="location.href='/Ticket/Details/@item.ticket.Id'" style="cursor: pointer;">
-                                <td class="ticket-id">@item.ticket.Id</td>
+                                <td class="fw-bold">@item.ticket.Id</td>
                                 <td>@item.ticket.Title</td>
                                 <td>@(item.ticket.Category?.Name ?? "-")</td>
                                 <td>
                                     @if (item.ticket.Status == TicketStatus.Open)
                                     {
-                                        <span class="badge bg-success">Offen</span>
+                                        <span class="badge bg-success" style="font-size: 0.6rem;">Offen</span>
                                     }
                                     else if (item.ticket.Status == TicketStatus.InProgress)
                                     {
-                                        <span class="badge bg-warning">In Bearbeitung</span>
+                                        <span class="badge bg-warning" style="font-size: 0.6rem;">In B.</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-secondary">Geschlossen</span>
+                                        <span class="badge bg-secondary" style="font-size: 0.6rem;">Zu</span>
                                     }
                                 </td>
-                                <td>@item.ticket.CreatedAt.ToString("dd.MM.yyyy")</td>
+                                <td style="font-size: 0.65rem;">@item.ticket.CreatedAt.ToString("dd.MM.yy")</td>
                             </tr>
                         }
                     </tbody>
@@ -365,27 +399,25 @@
         }
         else
         {
-            <div class="text-center p-5">
-                <i class="bi bi-inbox" style="font-size: 3rem;"></i>
-                <p class="mt-2">Keine Tickets vorhanden.</p>
-                <a href="/Ticket/Create" class="btn btn-primary">Erstes Ticket erstellen</a>
+            <div class="text-center p-3">
+                <i class="bi bi-inbox" style="font-size: 1.5rem;"></i>
+                <p class="mb-0 small">Keine Tickets</p>
+                <a href="/Ticket/Create" class="btn btn-sm btn-primary mt-1">Erstes erstellen</a>
             </div>
         }
     </div>
 </div>
 
-<!-- Privacy / Entwickler -->
-<div class="card mt-4">
-    <div class="card-header bg-white fw-bold">📌 Privacy/ Entwickler</div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <p><i class="bi bi-shield-check"></i> <strong>Privacy</strong><br />Ihre Daten werden vertraulich behandelt.</p>
-                <p><i class="bi bi-person-badge"></i> <strong>Entwickler</strong><br />Adil-si</p>
+<!-- Privacy -->
+<div class="card mt-2">
+    <div class="card-body p-2">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <small><i class="bi bi-shield-check"></i> Privacy | <i class="bi bi-person-badge"></i> Adil-si</small>
             </div>
-            <div class="col-md-6 text-md-end">
-                <a href="https://github.com/Adil-si" target="_blank" class="text-decoration-none">
-                    <i class="bi bi-github" style="font-size: 1.5rem;"></i> GitHub
+            <div class="col-md-4 text-end">
+                <a href="https://github.com/Adil-si" target="_blank" class="text-decoration-none small">
+                    <i class="bi bi-github"></i> GitHub
                 </a>
             </div>
         </div>
@@ -402,14 +434,14 @@
         var time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
         var sentMsg = document.createElement('div');
         sentMsg.className = 'chat-message sent';
-        sentMsg.innerHTML = '<small class="text-muted">Sie • ' + time + '</small><div>' + escapeHtml(message) + '</div>';
+        sentMsg.innerHTML = '<small>Sie • ' + time + '</small><div>' + escapeHtml(message) + '</div>';
         chatDiv.appendChild(sentMsg);
         input.value = '';
         chatDiv.scrollTop = chatDiv.scrollHeight;
         setTimeout(function() {
             var responseMsg = document.createElement('div');
             responseMsg.className = 'chat-message';
-            responseMsg.innerHTML = '<small class="text-muted">Live Agent • ' + new Date().getHours().toString().padStart(2, '0') + ':' + new Date().getMinutes().toString().padStart(2, '0') + '</small><div>Vielen Dank für Ihre Nachricht! Wir werden uns schnellstmöglich bei Ihnen melden.</div>';
+            responseMsg.innerHTML = '<small>Live Agent • ' + new Date().getHours().toString().padStart(2, '0') + ':' + new Date().getMinutes().toString().padStart(2, '0') + '</small><div>Vielen Dank!</div>';
             chatDiv.appendChild(responseMsg);
             chatDiv.scrollTop = chatDiv.scrollHeight;
         }, 1000);

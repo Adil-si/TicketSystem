@@ -68,6 +68,8 @@ namespace TicketSystem
             // Dashboard Service
             builder.Services.AddScoped<IDashboardService, DashboardService>();
 
+            builder.Services.AddScoped<IRandomUserService, RandomUserService>();
+
             // MVC
             builder.Services.AddControllersWithViews();
 
@@ -125,6 +127,10 @@ namespace TicketSystem
                 if (!await roleManager.RoleExistsAsync("Admin"))
                     await roleManager.CreateAsync(new IdentityRole("Admin"));
 
+                // Teamleiter-Rolle 
+                if (!await roleManager.RoleExistsAsync("Teamleiter"))
+                    await roleManager.CreateAsync(new IdentityRole("Teamleiter"));
+
                 // IT Abteilung ID holen
                 var itDepartment = await dbContext.Departments.FirstOrDefaultAsync(d => d.Name == "IT");
                 var itDepartmentId = itDepartment?.Id;
@@ -159,8 +165,24 @@ namespace TicketSystem
                     };
                     await userManager.CreateAsync(lisaUser, "test123");
                 }
-                    // Admin-User
-                    var adminEmail = "admin@ticket.de";
+                // Teamleiter-User
+                var teamleiterEmail = "teamleiter@ticket.de";
+                var teamleiterUser = await userManager.FindByEmailAsync(teamleiterEmail);
+                if (teamleiterUser == null)
+                {
+                    teamleiterUser = new ApplicationUser
+                    {
+                        UserName = teamleiterEmail,
+                        Email = teamleiterEmail,
+                        EmailConfirmed = true,
+                        Name = "Teamleiter",
+                        DepartmentId = itDepartmentId  
+                    };
+                    await userManager.CreateAsync(teamleiterUser, "Team123!");
+                    await userManager.AddToRoleAsync(teamleiterUser, "Teamleiter");
+                }
+                // Admin-User
+                var adminEmail = "admin@ticket.de";
                 var adminUser = await userManager.FindByEmailAsync(adminEmail);
                 if (adminUser == null)
                 {

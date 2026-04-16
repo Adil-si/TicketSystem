@@ -127,7 +127,7 @@ body {
 .navbar-user {
     color: #111827 !important;
     background: rgba(0, 189, 125, 0.15) !important;
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 6px 16px !important;
     margin-right: 10px;
     display: inline-flex;
@@ -229,8 +229,8 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 189, 125, 0.2), transparent);
-    animation: glintOnce 1.5s ease-out forwards;
+    background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+    animation: glintOnce 2.0s ease-out forwards;
     pointer-events: none;
 }
 
@@ -580,5 +580,22 @@ body {
 
     .card:hover, .admin-card:hover {
         transform: translateY(-3px);
+    }
+    /* Prioritäts-Badges */
+    .badge.bg-info {
+        background: #0ea5e9 !important;
+    }
+
+    .badge.bg-secondary {
+        background: #64748b !important;
+    }
+
+    .badge.bg-warning {
+        background: #f59e0b !important;
+        color: #1a1a1a;
+    }
+
+    .badge.bg-danger {
+        background: #ef4444 !important;
     }
 }

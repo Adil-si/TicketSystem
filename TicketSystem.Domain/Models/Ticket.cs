@@ -28,6 +28,7 @@ namespace TicketSystem.Domain.Models
         public ICollection<BlockedBy> BlockedByTickets { get; set; } = new List<BlockedBy>();
         public ICollection<BlockedBy> BlocksTickets { get; set; } = new List<BlockedBy>();
         public ICollection<TicketAssignee> Assignees { get; set; } = new List<TicketAssignee>();
+        public TicketPriority Priority { get; set; } = TicketPriority.Medium; //neu
         public int? DepartmentId { get; set; }
         public Department? Department { get; set; }
     }
@@ -36,5 +37,12 @@ namespace TicketSystem.Domain.Models
         Open,
         InProgress,
         Closed
+    }
+    public enum TicketPriority
+    {
+        Low,      
+        Medium,   
+        High,     
+        Urgent    
     }
 }

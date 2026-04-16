@@ -7,6 +7,10 @@
         public int OpenTickets { get; set; }
         public int ClosedTickets { get; set; }
         public int InProgressTickets { get; set; }
+        public int UrgentTickets { get; set; }
+        public int HighTickets { get; set; }
+        public int MediumTickets { get; set; }
+        public int LowTickets { get; set; }
 
         // Projekt für später
         public int TotalProjects { get; set; }
@@ -30,4 +34,5 @@
         public string CreatorName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }
+
 }

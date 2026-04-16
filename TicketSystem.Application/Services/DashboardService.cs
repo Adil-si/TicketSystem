@@ -39,7 +39,11 @@ namespace TicketSystem.Application.Services
                 ClosedTickets = tickets.Count(t => t.Status == TicketStatus.Closed),
                 InProgressTickets = tickets.Count(t => t.Status == TicketStatus.InProgress),
 
-                
+                UrgentTickets = tickets.Count(t => t.Priority == TicketPriority.Urgent),
+                HighTickets = tickets.Count(t => t.Priority == TicketPriority.High),
+                MediumTickets = tickets.Count(t => t.Priority == TicketPriority.Medium),
+                LowTickets = tickets.Count(t => t.Priority == TicketPriority.Low),
+
                 TotalUsers = users.Count,
                 AdminCount = adminCount,
                 UserCount = userCount,

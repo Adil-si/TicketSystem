@@ -37,6 +37,10 @@
         <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<TicketStatus>()"></select>
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
+    <div class="mb-3">
+        <label asp-for="Priority" class="form-label">Priorität</label>
+        <select asp-for="Priority" class="form-control" asp-items="Html.GetEnumSelectList<TicketPriority>()"></select>
+    </div>
 
     <button type="submit" class="btn btn-primary">Speichern</button>
     <a asp-action="Index" class="btn btn-secondary">Abbrechen</a>

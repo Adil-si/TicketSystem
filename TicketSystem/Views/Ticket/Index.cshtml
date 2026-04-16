@@ -4,86 +4,129 @@
     ViewData["Title"] = "Tickets";
 }
 
-<h2>Tickets</h2>
+<h2 class="mb-2" style="font-size: 1.3rem;">🎫 Tickets</h2>
 
 @if (User.Identity.IsAuthenticated)
 {
-    <p>
-        <a asp-action="Create" class="btn btn-primary">Neues Ticket erstellen</a>
-    </p>
+    <div class="mb-2">
+        <a asp-action="Create" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle"></i> Neu
+        </a>
+    </div>
 }
 
-<div class="mb-3">
-    <label class="form-label">Abteilung filtern</label>
-    <select id="departmentFilter" class="form-control">
-        <option value="">-- Alle Abteilungen --</option>
+<div class="mb-2">
+    <select id="departmentFilter" class="form-select form-select-sm" style="width: auto; display: inline-block;">
+        <option value="">Alle Abteilungen</option>
         @foreach (var dept in ViewBag.Departments)
         {
             <option value="@dept.Id">@dept.Name</option>
         }
     </select>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Titel</th>
-            <th>Abteilung</th>
-            <th>Kategorie</th>
-            <th>Status</th>
-            <th>Ersteller</th>
-            <th>Erstellt am</th>
-            <th>Aktionen</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var ticket in Model)
-        {
-            <tr>
-                <td>@ticket.Id</td>
-                <td>@ticket.Title</td>
-                <td>@(ticket.Department?.Name ?? "-")</td>
-                <td>@(ticket.Category?.Name ?? "Keine Kategorie")</td>
-                <td>
-                    @if (ticket.Status == TicketStatus.Open)
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-sm mb-0" style="font-size: 0.75rem;">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Titel</th>
+                        <th>Abt.</th>
+                        <th>Kat.</th>
+                        <th>Pri.</th>
+                        <th>Status</th>
+                        <th>Ersteller</th>
+                        <th>Erstellt</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ticket in Model)
                     {
-                        <span class="badge bg-success">Offen</span>
+                        <tr>
+                            <td>@ticket.Id</td>
+                            <td>@ticket.Title</td>
+                            <td>@(ticket.Department?.Name?.Substring(0, Math.Min(2, ticket.Department.Name.Length)) ?? "-")</td>
+                            <td>@(ticket.Category?.Name?.Substring(0, Math.Min(2, ticket.Category.Name.Length)) ?? "-")</td>
+                            <td>
+                                @if (ticket.Priority == TicketPriority.Low)
+                                {
+                                    <span class="badge bg-info px-1 py-0" style="font-size: 0.65rem;">🟢</span>
+                                }
+                                else if (ticket.Priority == TicketPriority.Medium)
+                                {
+                                    <span class="badge bg-secondary px-1 py-0" style="font-size: 0.65rem;">🟡</span>
+                                }
+                                else if (ticket.Priority == TicketPriority.High)
+                                {
+                                    <span class="badge bg-warning px-1 py-0" style="font-size: 0.65rem;">🟠</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger px-1 py-0" style="font-size: 0.65rem;">🔴</span>
+                                }
+                            </td>
+                            <td>
+                                @if (ticket.Status == TicketStatus.Open)
+                                {
+                                    <span class="badge bg-success px-1 py-0" style="font-size: 0.65rem;">Offen</span>
+                                }
+                                else if (ticket.Status == TicketStatus.InProgress)
+                                {
+                                    <span class="badge bg-warning px-1 py-0" style="font-size: 0.65rem;">In B.</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary px-1 py-0" style="font-size: 0.65rem;">Zu</span>
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var creatorName = ViewBag.CreatorNames != null && ViewBag.CreatorNames.ContainsKey(ticket.ApplicationUserId ?? "")
+                                        ? ViewBag.CreatorNames[ticket.ApplicationUserId ?? ""]
+                                        : "?";
+                                }
+                                @if (creatorName.Length > 10)
+                                {
+                                    creatorName = creatorName.Substring(0, 10) + "..";
+                                }
+                                @creatorName
+                            </td>
+                            <td style="font-size: 0.65rem;">@ticket.CreatedAt.ToString("dd.MM.yy")</td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a asp-action="Details" asp-route-id="@ticket.Id" class="btn btn-sm btn-info py-0 px-1" style="font-size: 0.7rem;" title="Details">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@ticket.Id" class="btn btn-sm btn-warning py-0 px-1" style="font-size: 0.7rem;" title="Bearbeiten">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form asp-action="DeleteTicket" asp-route-id="@ticket.Id" method="post" style="display:inline" onsubmit="return confirm('Ticket löschen?')">
+                                            <button type="submit" class="btn btn-sm btn-danger py-0 px-1" style="font-size: 0.7rem;" title="Löschen">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                    @if (User.Identity.IsAuthenticated && ticket.Status != TicketStatus.Closed)
+                                    {
+                                        <a asp-action="Close" asp-route-id="@ticket.Id" class="btn btn-sm btn-success py-0 px-1" style="font-size: 0.7rem;" title="Schließen" onclick="return confirm('Ticket schließen?')">
+                                            <i class="bi bi-check-lg"></i>
+                                        </a>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
                     }
-                    else if (ticket.Status == TicketStatus.InProgress)
-                    {
-                        <span class="badge bg-warning">In Bearbeitung</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">Geschlossen</span>
-                    }
-                </td>
-                <td>
-                    @{
-                        var creatorName = ViewBag.CreatorNames != null && ViewBag.CreatorNames.ContainsKey(ticket.ApplicationUserId ?? "")
-                            ? ViewBag.CreatorNames[ticket.ApplicationUserId ?? ""]
-                            : "Unbekannt";
-                    }
-                    @creatorName
-                </td>
-                <td>@ticket.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@ticket.Id" class="btn btn-sm btn-info">Details</a>
-                    
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-action="Edit" asp-route-id="@ticket.Id" class="btn btn-sm btn-warning">Bearbeiten</a>
-                    }
-                    
-                    @if (User.Identity.IsAuthenticated && ticket.Status != TicketStatus.Closed)
-                    {
-                        <a asp-action="Close" asp-route-id="@ticket.Id" class="btn btn-sm btn-danger">Schließen</a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <script>
     document.getElementById('departmentFilter').addEventListener('change', function() {
         var deptId = this.value;

@@ -28,6 +28,25 @@
                 <span class="badge bg-secondary">Geschlossen</span>
             }
         </p>
+        <p>
+            <strong>Priorität:</strong>
+            @if (Model.Priority == TicketPriority.Low)
+            {
+                <span class="badge bg-info">Niedrig</span>
+            }
+            else if (Model.Priority == TicketPriority.Medium)
+            {
+                <span class="badge bg-secondary">Mittel</span>
+            }
+            else if (Model.Priority == TicketPriority.High)
+            {
+                <span class="badge bg-warning">Hoch</span>
+            }
+            else
+            {
+                <span class="badge bg-danger">Dringend</span>
+            }
+        </p>
         <p><strong>Kategorie:</strong> @(Model.Category?.Name ?? "Keine")</p>
         <p><strong>Abteilung:</strong> @(Model.Department?.Name ?? "-")</p>
         <p><strong>Erstellt:</strong> @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
