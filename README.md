@@ -13,7 +13,7 @@
 - ✅ Ticket-Blockierung (Abhängigkeiten zwischen Tickets)
 - ✅ Team-Zusammenarbeit (mehrere Mitarbeiter pro Ticket)
   
-###T   icket-Prioritäten
+### 📌 Ticket-Prioritäten
 - ✅ TicketPriority Enum (Low, Medium, High, Urgent)
 - ✅ Migration AddTicketPriority
 - ✅ Priorität in Create, Edit, Index, Details
