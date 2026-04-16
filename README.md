@@ -142,6 +142,8 @@ Wer darf Was:
 | Abteilungen verwalten      | ✅          | ❌                 | ❌ |                               ❌
 | Nachrichten senden         | ✅          | ✅                 | ✅ |                               ✅
 | Dashboard sehen            | ✅          | ✅                 | ✅ |                               ✅
+| Teammitglieder sehen       | ✅          | ❌                 | ❌ |                               ✅    (nur eigene Abt.)
+| Mitarbeiter zu TK zuweisen | ✅          | ❌                 | ❌ |                               	✅    (nur eigene Abt.)        | Alle Tickets sehen         | ✅          | ❌                 | ❌ |	                               ✅
 
 ---
 
