@@ -98,7 +98,8 @@ Admin:	admin@ticket.de	 =>   Admin123!
 Teamleiter : teamleiter@ticket.de  =>  Team123!
 
 Benutzer: lisa@schmidt.de -	test@test.de - john@doe.de =>	test123
-generierten Benutzer haben das Passwort                   Demo123!
+
+generierten Benutzer: haben das Passwort                   Demo123!
 
 ---
 🐛 Bekannte Probleme & Lösungen
