@@ -126,7 +126,7 @@ Wer darf Was:
 | Fremde Tickets ansehen     | ✅        ❌ (nur eigene Ag)|    ❌ (nur eigene Abteilung)            ❌
 
 | Ticket bearbeiten          | ✅          | ✅                 | ❌ |                               ✅ 
-| Ticket schließen           | ✅          | ✅                 | ❌ |                               ❌ (nur eigene Abteilung)
+| Ticket schließen           | ✅          | ✅                 | ❌ |                               ✅ (nur eigene Abteilung)
 | Ticket löschen             | ✅          | ❌                 | ❌ |                               ❌
 | Kommentar hinzufügen       | ✅          | ✅                 | ✅ |                               ✅ 
 | Kommentar löschen          | ✅          | ❌                 | ❌ |                               ❌
