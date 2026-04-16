@@ -66,6 +66,8 @@ Rolle	Email	Passwort
 
 Admin:	admin@ticket.de	 =>   Admin123!
 
+Teamleiter : teamleiter@ticket.de  =>  Team123!
+
 Benutzer: lisa@schmidt.de -	test@test.de - john@doe.de =>	test123
 
 ---
