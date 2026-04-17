@@ -139,6 +139,21 @@ git add README.md
 git commit -m "README.md hinzugefügt"
 git push
 
+##🚀 Schnell-Check für neuen PC
+
+git clone https://github.com/Adil-si/TicketSystem.git
+cd TicketSystem
+
+dotnet restore
+
+dotnet build
+
+cd TicketSystem.Infrastructure
+dotnet ef database update --startup-project ../TicketSystem
+
+cd ../TicketSystem
+dotnet run
+
 ---
 📋 Weitere nützliche Befehle:
 Befehl	Beschreibung
@@ -174,7 +189,11 @@ Wer darf Was:
 | Nachrichten senden         | ✅          | ✅                 | ✅ |                               ✅
 | Dashboard sehen            | ✅          | ✅                 | ✅ |                               ✅
 | Teammitglieder sehen       | ✅          | ❌                 | ❌ |                               ✅    (nur eigene Abt.)
-| Mitarbeiter zu TK zuweisen | ✅          | ❌                 | ❌ |                               	✅    (nur eigene Abt.)        | Alle Tickets sehen         | ✅          | ❌                 | ❌ |	                               ✅
+| Mitarbeiter zu TK zuweisen | ✅          | ❌                 | ❌ |                               ✅    (nur eigene Abt.)       
+| Alle Tickets sehen         | ✅          | ❌                 | ❌ |                               ✅
+ 
+
+
 
 ---
 
