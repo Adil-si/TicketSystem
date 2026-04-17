@@ -1,13 +1,10 @@
 # Vor der Arbeit
 git pull origin develop
 
-
-
 # Nach der Arbeit
 git add .
 git commit -m "Was du gemacht hast"
 git push origin develop
-
 
 clonen
 
@@ -17,5 +14,67 @@ cd TicketSystem
 git checkout develop
 
 git pull origin develop               <= neuste virsion holen
+-----------------------------------------------------------------------------------------------------------------
+🚀 Schnell-Check für neuen PC
+
+# Prüfe .NET Version
+dotnet --version   # sollte 8.0.x sein
+
+# Prüfe Git
+git --version
+
+# Dann:
+git clone https://github.com/Adil-si/TicketSystem.git
+cd TicketSystem
+
+dotnet restore
+dotnet build
+
+cd TicketSystem.Infrastructure
+dotnet ef database update --startup-project ../TicketSystem
+cd ../TicketSystem
+dotnet run
+------------------------------------------------------------------------------------------------------------------
+
+📝 Cheat Sheet für die Präsentation
+# TICKETSYSTEM PRÄSE
+
+## LOGIN
+- Admin: admin@ticket.de / Admin123!
+- Teamleiter: teamleiter@ticket.de / Team123!
+- User: test@test.de / test123
+
+## DASHBOARD
+- Statistik-Karten (Tickets, offen, etc.)
+- Beliebte Themen (Access, Facilities, etc.)
+- Quick Access (Request, Knowledge, Report)
+- Work Items mit Prozenten
+- Filter (Suche, Kategorie, Abteilung, Status)
+- Chat Box
+
+## TICKET
+- Erstellen mit Titel, Beschreibung, Kategorie, Abteilung, Priorität, Datei
+- Kommentare, Attachments
+- Blockierung (Ticket A blockiert Ticket B)
+- Team (Assignees)
+
+## ADMIN
+- User sperren/entsperren, Admin/Teamleiter machen
+- Kategorien, Abteilungen
+- Zufällige Benutzer generieren
+
+## FEATURES
+- Dark Mode (bleibt gespeichert)
+- Nachrichten (mit Badge)
+- Responsive Design
+
+## TECHNOLOGIEN
+- ASP.NET Core MVC
+- Entity Framework Core
+- SQL Server
+- Bootstrap 5
+- Custom CSS
+
+
 
 
