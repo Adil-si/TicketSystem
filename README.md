@@ -19,9 +19,9 @@
 - ✅ Priorität in Create, Edit, Index, Details
 - ✅ Prioritäts-Statistik im Dashboard
   
-### 👥 Benutzer & Rollen<img width="1891" height="935" alt="Screenshot 2026-04-24 082626" src="https://github.com/user-attachments/assets/c3916b31-1c92-4562-872b-38ab9e89f9d2" />
+### 👥 Admin Rollen
 - ✅ Admin kann User sperren/entsperren (mit Grund)
-- ✅ Admin kann User zum Admin machen
+- ✅ Admin kann alles und auch User zum Admin machen
   
 ###  Teamleiter-Rolle
 - ✅ Neue Rolle Teamleiter in Program.cs
@@ -190,7 +190,7 @@ Wer darf Was:
 | Mitarbeiter zu TK zuweisen | ✅          | ❌                 | ❌ |                               ✅    (nur eigene Abt.)       
 | Alle Tickets sehen         | ✅          | ❌                 | ❌ |                               ✅
  
-<img width="1891" height="935" alt="Screenshot 2026-04-24 082626" src="https://github.com/user-attachments/assets/0c0abae0-445e-4507-bdb5-e92e1450acb5" />
+<img width="1891" height="935" alt="Screenshot 2026-04-24 082626" src="https://github.com/user-attachments/assets/c3916b31-1c92-4562-872b-38ab9e89f9d2" />
 
 
 
