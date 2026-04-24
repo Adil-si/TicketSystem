@@ -128,6 +128,9 @@ Chat-Nachrichten nicht sichtbar	CSS-Cache leeren
 5. Speichern im Hauptverzeichnis
 
 ---
+Screenshot
+<img width="1891" height="935" alt="Screenshot 2026-04-24 082626" src="https://github.com/user-attachments/assets/c3916b31-1c92-4562-872b-38ab9e89f9d2" />
+---
 
 ## 🚀 **Nach dem Speichern:**
 
@@ -190,7 +193,7 @@ Wer darf Was:
 | Mitarbeiter zu TK zuweisen | ✅          | ❌                 | ❌ |                               ✅    (nur eigene Abt.)       
 | Alle Tickets sehen         | ✅          | ❌                 | ❌ |                               ✅
  
-<img width="1891" height="935" alt="Screenshot 2026-04-24 082626" src="https://github.com/user-attachments/assets/c3916b31-1c92-4562-872b-38ab9e89f9d2" />
+
 
 
 
